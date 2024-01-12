@@ -30,6 +30,8 @@ chemprop_train --data_path ./data/labels_training_set_w_drugbank_id.csv \
 --config_path ./data/full_data_hyperparams_w_rkdit.json
 ```
 
+or use ``code/multimodal_learning/target_main.py`` to train via python code
+
 
 To reproduce the anti-cancer with additional features run the multimodal learning code using the ``code/multimodal_learning/interactions_main.py`` to train a DDI model
 then train the chemprop model using ``code/multimodal_learning/target_main.py with the task ``cancer`` and uncomment lines 111 and 112 to add the addtional features
