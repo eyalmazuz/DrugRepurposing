@@ -14,20 +14,14 @@ To reproduce the anti-cancer without addtional features run the following comman
 ```
 chemprop_train --data_path ./data/labels_training_set_w_drugbank_id.csv \
 --dataset_type classification \
---extra_metrics prc-auc \
---split_type scaffold_balanced \
---ignore_columns drugBank_id \
---split_sizes 0.9 0.1 0.0 \
---save_dir ./models/anti-cancer \
---smiles_column Smiles \
---save_preds \
---save_smiles_splits \
---show_individual_scores \
---num_workers 0 \
---batch_size 512 \
---separate_test_path ./data/all_data_infer_labels_preds_w_drug_bank_info_no_features.csv \
---no_features_scaling --features_generator rdkit_2d_normalized \
---config_path ./data/full_data_hyperparams_w_rkdit.json
+--number_of_molecules 1 --smiles_columns Smiles \
+--metric auc --extra_metrics prc-auc accuracy mcc \
+--save_preds --save_smiles_splits \
+--config_path ./data/full_data_hyperparams_w_rkdit.json \
+--loss_function binary_cross_entropy \
+--split_sizes 0.7 0.1 0.2 --target_columns cancer \
+--split_type scaffold_balanced --save_dir ./model \
+--num_folds 3 --ensemble_size 2 \
 ```
 
 or use ``code/multimodal_learning/target_main.py`` to train via python code
@@ -35,6 +29,22 @@ or use ``code/multimodal_learning/target_main.py`` to train via python code
 
 To reproduce the anti-cancer with additional features run the multimodal learning code using the ``code/multimodal_learning/interactions_main.py`` to train a DDI model
 then train the chemprop model using ``code/multimodal_learning/target_main.py with the task ``cancer`` and uncomment lines 111 and 112 to add the addtional features
+
+or from the commandline
+
+```
+chemprop_train --data_path ./data/labels_training_set_w_drugbank_id.csv \
+--dataset_type classification \
+--number_of_molecules 1 --smiles_columns Smiles \
+--metric auc --extra_metrics prc-auc accuracy mcc \
+--save_preds --save_smiles_splits \
+--config_path ./data/full_data_hyperparams_w_rkdit.json \
+--loss_function binary_cross_entropy \
+--split_sizes 0.7 0.1 0.2 --target_columns cancer \
+--split_type scaffold_balanced --save_dir ./model_DDI_DTI \
+--num_folds 3 --ensemble_size 2 \
+--features_path ./data/labels_training_set_w_drugbank_id_DDIFeature_256.csv ./data/labels_training_set_w_drugbank_id_TargetPCAFeature_64.csv
+```
 
 
 ## Predict with chemprop model
