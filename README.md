@@ -1,5 +1,7 @@
 # DrugRepurposing
 
+This repo is for the paper "Eravacycline, an Antibacterial Drug, Repurposed for Pancreatic Cancer Therapy: Insights from a Molecular-Based Deep Learning Model" which contains the code to train a drug reporpusing model for cancer treatments
+
 ## Data
 The data is located under the data folder:
 
